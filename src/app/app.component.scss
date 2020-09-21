@@ -1,0 +1,27 @@
+.app {
+    padding: 20px;
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+
+    &__main {
+        flex-basis: 50%;
+        flex-grow: 1;
+        padding: 20px;
+    }
+
+    &__options {
+        padding: 20px;
+        flex-basis: 50%;
+        flex-grow: 1;
+
+        .base {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    table {
+        width: 100%;
+    }
+}
