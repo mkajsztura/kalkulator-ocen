@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AddRangeComponent } from './add-range/add-range.component';
 
 interface Range {
   index: number;
@@ -49,4 +51,12 @@ export class AppComponent {
   step = 1;
   dataSource = defaultRanges;
   displayedColumns: string[] = ['value', 'grade'];
+
+  constructor(
+    private dialog: MatDialog
+  ) {}
+
+  openAddDialog(): void {
+    this.dialog.open(AddRangeComponent);
+  }
 }

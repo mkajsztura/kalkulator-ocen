@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Dodaj ocenę i zakres</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="form" class="form">
+        <div class="form__item">
+            <mat-form-field>
+                <mat-label>Zakres od [%]</mat-label>
+                <input matInput type="number" formControlName="value" />
+            </mat-form-field>
+        </div>
+        <div class="form__item">
+            <mat-form-field>
+                <mat-label>Ocena</mat-label>
+                <input matInput type="text" formControlName="grade" />
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Anuluj</button>
+  <button mat-button [mat-dialog-close]="true">Dodaj</button>
+</mat-dialog-actions>

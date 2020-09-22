@@ -12,12 +12,23 @@
 
     &__options {
         padding: 20px;
-        flex-basis: 50%;
+        flex-basis: 40%;
         flex-grow: 1;
 
         .base {
             display: flex;
             justify-content: space-between;
+        }
+
+        .grade {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .add-btn {
+            margin-top: 10px;
+            text-align: center;
         }
     }
 
