@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { IRange } from '../app.component';
 
 @Component({
   selector: 'app-add-range',
@@ -14,7 +15,27 @@ export class AddRangeComponent {
   });
 
   constructor(
-    public dialogRef: MatDialogRef<AddRangeComponent>
+    public dialogRef: MatDialogRef<AddRangeComponent>,
+    @Inject(MAT_DIALOG_DATA) public ranges: IRange[]
   ) {}
+
+  onSubmit(): void {
+    if (!this.form.valid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const { value, grade } = this.form.value;
+    const index = this.ranges.length;
+    const newRange: IRange = {
+      value,
+      grade,
+      index
+    };
+    const newRanges = [...this.ranges, newRange].sort((a, b) => {
+      return a.value - b.value;
+    });
+    this.dialogRef.close(newRanges);
+  }
 
 }

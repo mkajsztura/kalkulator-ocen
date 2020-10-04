@@ -1,6 +1,23 @@
 <div class="app">
   <div class="app__main">
-    <mat-card>Kalkulator ocen</mat-card>
+    <mat-card>
+      <table mat-table [dataSource]="grades">
+        <ng-container matColumnDef="points">
+          <th mat-header-cell *matHeaderCellDef>Punkty</th>
+          <td mat-cell *matCellDef="let grade">{{ grade.points }}</td>
+        </ng-container>
+        <ng-container matColumnDef="percentage">
+          <th mat-header-cell *matHeaderCellDef>Procent</th>
+          <td mat-cell *matCellDef="let grade">{{ grade.percentage }}</td>
+        </ng-container>
+        <ng-container matColumnDef="grade">
+          <th mat-header-cell *matHeaderCellDef>Ocena</th>
+          <td mat-cell *matCellDef="let grade">{{ grade.grade }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns2"></tr>
+      </table>
+    </mat-card>
   </div>
   <div class="app__options">
     <mat-card>
@@ -14,7 +31,7 @@
           <input matInput type="text" [(ngModel)]="step" />
         </mat-form-field>
       </div>
-      <table mat-table [dataSource]="dataSource">
+      <table mat-table [dataSource]="ranges">
         <ng-container matColumnDef="value">
           <th mat-header-cell *matHeaderCellDef>Od [%]</th>
           <td mat-cell *matCellDef="let range">{{ range.value }}</td>
@@ -38,3 +55,4 @@
     </mat-card>
   </div>
 </div>
+{{ grades | json }}

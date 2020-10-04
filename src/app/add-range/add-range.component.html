@@ -17,5 +17,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Anuluj</button>
-  <button mat-button [mat-dialog-close]="true">Dodaj</button>
+  <button mat-button (click)="onSubmit()">Dodaj</button>
 </mat-dialog-actions>
