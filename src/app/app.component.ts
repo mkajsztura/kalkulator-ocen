@@ -1,51 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { AddRangeComponent } from './add-range/add-range.component';
 import { filter } from 'rxjs/operators';
-export interface IRange {
-  index: number;
-  value: number;
-  grade: string;
-}
+import { MatDialog } from '@angular/material/dialog';
 
-export interface IResult {
-  points: number;
-  percentage: number;
-  grade: string;
-}
-
-const defaultRanges: IRange[] = [
-  {
-    index: 0,
-    value: 0,
-    grade: '1',
-  },
-  {
-    index: 1,
-    value: 35,
-    grade: '2',
-  },
-  {
-    index: 2,
-    value: 50,
-    grade: '3',
-  },
-  {
-    index: 3,
-    value: 70,
-    grade: '4',
-  },
-  {
-    index: 4,
-    value: 90,
-    grade: '5',
-  },
-  {
-    index: 5,
-    value: 100,
-    grade: '6',
-  },
-];
+import { AddRangeComponent } from './add-range/add-range.component';
+import { IRange } from './model/range.model';
+import { IResult } from './model/result.model';
+import { DEFAULT_RANGES } from './default-ranges.const';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-root',
@@ -57,7 +19,7 @@ export class AppComponent implements OnInit {
   maxPoints = 10;
   steps: number[] = [0.5, 1];
   step = 1;
-  ranges = defaultRanges;
+  ranges = DEFAULT_RANGES;
   displayedColumns: string[] = ['value', 'grade'];
   displayedColumns2: string[] = ['points', 'percentage', 'grade'];
   results: IResult[];
@@ -104,6 +66,38 @@ export class AppComponent implements OnInit {
 
   editRange(index): void {
 
+  }
+
+  generatePdf(): void {
+    const doc = new jsPDF();
+    const tableStart = `
+    <table width="100%">
+      <tr>
+        <th>Punkty</th>
+        <th>Procent</th>
+        <th>Ocena</th>
+      </tr>`;
+    const results = this.results.map((result) => {
+      return `<tr>
+        <td>${result.points}</td>
+        <td>${result.percentage}</td>
+        <td>${result.grade}</td>
+      </tr>`;
+    }).join('');
+    const tableEnd = `</table>`;
+
+    const table = tableStart + results + tableEnd;
+    console.log(table)
+    // doc.fromHTML(table, 1, 1);
+
+    doc.autoTable({
+      head: [['Punkty', 'Procent', 'Ocena']],
+      body: [
+        ...this.results.map((result) => [result.points, result.percentage, result.grade])
+        // ...
+      ],
+    });
+    doc.save('wyniki.pdf');
   }
 
   private assignGrade(percentage): string {
